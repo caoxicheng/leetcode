@@ -40,68 +40,98 @@
 // 操作数将在 1 至 1000 的范围内；
 // 请不要使用内置的队列库。
 
-
-
-
-
-
-
-
 /**
  * Initialize your data structure here. Set the size of the queue to be k.
  * @param {number} k
  */
-var MyCircularQueue = function(k) {
-
+var MyCircularQueue = function (k) {
+  this._length = k;
+  this._innerNumber = 0;
+  this._head = -1;
+  this._tail = -1;
+  this._queue = Object.create(null);
+  for (let i = 0; i < k; i++) {
+    this._queue[i] = undefined;
+  }
 };
 
 /**
- * Insert an element into the circular queue. Return true if the operation is successful. 
+ * Insert an element into the circular queue. Return true if the operation is successful.
  * @param {number} value
  * @return {boolean}
  */
-MyCircularQueue.prototype.enQueue = function(value) {
-
+MyCircularQueue.prototype.enQueue = function (value) {
+  if (this._head === -1 && this._head === -1) {
+    this._head++;
+    this._tail++;
+    this._innerNumber++;
+    this._queue[this._head] = value;
+  } else if (this._head !== -1 && !this.isFull()) {
+    this._tail++;
+    this._innerNumber++;
+    if (this._tail === this._length) {
+      this._tail = 0;
+    }
+    this._queue[this._tail] = value;
+  } else if (this.isFull()) {
+    // 暂定满的情况
+    return false;
+  }
+  return true;
 };
 
 /**
  * Delete an element from the circular queue. Return true if the operation is successful.
  * @return {boolean}
  */
-MyCircularQueue.prototype.deQueue = function() {
-
+MyCircularQueue.prototype.deQueue = function () {
+  if (this.isEmpty()) {
+    return false;
+  }
+  delete this._queue[this._head++];
+  this._innerNumber--;
+  if (this._head === this._length) {
+    this._head = 0;
+  }
+  return true;
 };
 
 /**
  * Get the front item from the queue.
  * @return {number}
  */
-MyCircularQueue.prototype.Front = function() {
-
+MyCircularQueue.prototype.Front = function () {
+  if (this.isEmpty()) {
+    return -1;
+  }
+  return this._queue[this._head];
 };
 
 /**
  * Get the last item from the queue.
  * @return {number}
  */
-MyCircularQueue.prototype.Rear = function() {
-
+MyCircularQueue.prototype.Rear = function () {
+  if (this.isEmpty()) {
+    return -1;
+  }
+  return this._queue[this._tail];
 };
 
 /**
  * Checks whether the circular queue is empty or not.
  * @return {boolean}
  */
-MyCircularQueue.prototype.isEmpty = function() {
-
+MyCircularQueue.prototype.isEmpty = function () {
+  return this._innerNumber === 0;
 };
 
 /**
  * Checks whether the circular queue is full or not.
  * @return {boolean}
  */
-MyCircularQueue.prototype.isFull = function() {
-
+MyCircularQueue.prototype.isFull = function () {
+  return this._innerNumber === this._length;
 };
 
 /**
@@ -114,3 +144,23 @@ MyCircularQueue.prototype.isFull = function() {
  * var param_5 = obj.isEmpty()
  * var param_6 = obj.isFull()
  */
+
+let circularQueue = new MyCircularQueue(3); // 设置长度为 3
+
+console.log(circularQueue.enQueue(1)); // 返回 true
+
+console.log(circularQueue.enQueue(2)); // 返回 true
+
+console.log(circularQueue.enQueue(3)); // 返回 true
+
+console.log(circularQueue.enQueue(4)); // 返回 false，队列已满
+
+console.log(circularQueue.Rear()); // 返回 3
+
+console.log(circularQueue.isFull()); // 返回 true
+
+console.log(circularQueue.deQueue()); // 返回 true
+
+console.log(circularQueue.enQueue(4)); // 返回 true
+
+console.log(circularQueue.Rear()); // 返回 4
