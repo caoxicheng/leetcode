@@ -25,18 +25,15 @@ const FooServiceSingleton = (function () {
 
   let fooService;
 
-  return {
-    getInstance: function () {
-      if (!fooService) {
-        fooService = new FooService();
-      }
-      return fooService;
-    },
+  return function () {
+    if (!fooService) {
+      fooService = new FooService();
+    }
+    return fooService;
   };
 })();
 
-
-const fooService1 = FooServiceSingleton.getInstance();
-const fooService2 = FooServiceSingleton.getInstance();
+const fooService1 = FooServiceSingleton;
+const fooService2 = FooServiceSingleton;
 
 console.log(fooService1 === fooService2); // true
