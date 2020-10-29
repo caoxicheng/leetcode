@@ -1,5 +1,5 @@
 function reverse(x: number): number {
-  const range: number = Math.pow(2,31);
+  const range: number = 0x80000000;
 
   let y: number = 0;
   while (x) {
