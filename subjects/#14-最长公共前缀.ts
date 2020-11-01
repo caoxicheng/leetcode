@@ -1,15 +1,27 @@
 function longestCommonPrefix(strs: string[]): string {
-   let re = '';
-   if (!strs.length) return re;
-    //    位
-   for (let i = 0; i < strs[0].length; i++) {
-    //    个
-       for (let j = 0; j < strs.length; j++) {
-           if (strs[j][i] !== strs[0][i]) {
-               return re;
-           } 
+    let result = strs[0] || "";
+
+   for (let index = 1; index < strs.length; index++){
+       result = commText(result, strs[index]);
+       if (result === '') {
+           return result;
        }
-       re += strs[0][i];
    }
-   return re;
+   return result;
+}
+
+function commText(x: string, y: string): string {
+    let result: string = "";
+    if (x === '' || y === '') {
+        return result;
+    }
+    while(result.length < Math.min(x.length, y.length)){
+        if (x[result.length] === y[result.length]) {
+            result += x[result.length];
+        } else {
+            return result;
+        }
+    }
+
+    return result;
 }
