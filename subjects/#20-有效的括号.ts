@@ -1,33 +1,27 @@
+let map: any = {
+    '{' : '}',
+    '(' : ')',
+    '[' : ']'
+}
+
 function isValid(s: string): boolean {
-    let stack: Array<string> = [];
-    for (let index = 0; index < s.length; index++) {
-        switch (s[index]) {
-            case '(':
-            case '[':
-            case '{':
-                stack.push(s[index]);
-                break;
-            case ')':
-                if (stack[stack.length - 1] === '(') {
-                    stack.pop();
-                } else {
-                    return false;
-                }
-                break;
-            case ']':
-                if (stack[stack.length - 1] === '[') {
-                    stack.pop();
-                } else {
-                    return false;
-                }
-                break;
-            case '}':
-                if (stack[stack.length - 1] === '{') {
-                    stack.pop();
-                } else {
-                    return false;
-                }
+
+    let stack: string[] = [];
+    let top: string | undefined;
+
+    for(let char of s){
+        let value;
+        if((value = map[char])){
+            stack.push(value);
+        }else{
+            top = stack.pop();
+            if(top !== char){
+                return false;
+            }
         }
     }
-    return stack.length === 0;
-};
+
+    return !stack.length;
+}
+
+console.log(isValid('[()]'));
