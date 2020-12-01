@@ -2,31 +2,25 @@ function convert(s: string, numRows: number): string {
   if (numRows === 1) {
     return s;
   }
-  let zigzag: Array<any> = [];
-  
-  for(let index = 0; index < numRows; index++) {
-    zigzag.push([]);
+  let len: number = Math.min(s.length, numRows);
+  let rows: string[] = [];
+  for (let i = 0; i<len; i++) rows.push("");
+
+  let down: boolean = false;
+  let loc: number = 0;
+
+  for (const c of s) {
+    rows[loc] += c;
+    if (loc === 0 || loc === numRows - 1){
+      down = !down;
+    }
+
+    loc += down ? 1:-1;
   }
 
-  let row: number = 0, col: number = 0;
-  for (let index = 0; index < s.length; index++) {
-    let element = s[index];
-    if ( col % (numRows - 1) === 0) {
-      zigzag[row++][col] = element;
-      if (row === numRows) {
-        col++;
-        row=0;
-      }
-    } else {
-      row = (numRows - 1) - (col % (numRows - 1));
-      zigzag[row][col++] = element;
-      row = 0;
-    }
+  let ans: string = "";
+  for (const row of rows) {
+    ans += row;
   }
-  
-  let result = '';
-  zigzag.forEach( row => {
-    result += row.join('')
-  })
-  return result
+  return ans;
 };
