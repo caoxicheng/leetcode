@@ -15,11 +15,11 @@ function convert(s: string, numRows: number): string {
       zigzag[row++][col] = element;
       if (row === numRows) {
         col++;
+        row=0;
       }
     } else {
-      row = (numRows - 1) - (col & (numRows - 1));
+      row = (numRows - 1) - (col % (numRows - 1));
       zigzag[row][col++] = element;
-      console.log(element, row, col);
       row = 0;
     }
   }
