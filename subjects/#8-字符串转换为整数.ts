@@ -1,11 +1,31 @@
 function myAtoi(s: string): number {
-  let result = parseInt(s);
-  if  (result !== result) return 0
-  if (result > (Math.pow(2,31) - 1)) {
-      return (Math.pow(2,31) - 1);
+  s = s.trim();
+  let symbol = true;
+  let index = 0;
+  let result: any = "";
+  if (s[index] == "-") {
+    symbol = false;
+    index++;
+  } else if (s[index] == "+") {
+    index++;
   }
-  if (result < -Math.pow(2,31)) {
-      return -Math.pow(2,31)
+  for (; index < s.length; index++) {
+    if ("0" <= s[index] && s[index] <= "9") {
+      result += s[index];
+    } else {
+      break;
+    }
   }
-  return result
-};
+  if (result === "") {
+    return 0;
+  }
+
+  symbol === false && (result = -1 * Number(result));
+  if (result > Math.pow(2, 31) - 1) {
+    return Math.pow(2, 31) - 1;
+  }
+  if (result < -Math.pow(2, 31)) {
+    return -Math.pow(2, 31);
+  }
+  return result;
+}
