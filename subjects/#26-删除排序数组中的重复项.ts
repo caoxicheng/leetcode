@@ -3,19 +3,13 @@ function removeDuplicates(nums: number[]): number {
     return nums.length;
   }
 
-  let i:number = 0, j:number =1;
-  while(j < nums.length) {
-    if (nums[i] === nums[j]) {
-      j++;
-    } else {
-      nums.splice(i, j - i - 1)
-      i++;
-      j = i+1;
-    }
-  }
-  if (i !== j) {
-    nums.splice(i, j - i - 1)
-  }
+  let p = 0, q = 0;
 
-  return nums.length;
-};
+  while(q <= nums.length) {
+    if (nums[p] !== nums [q]) {
+      nums[++p] = nums[q];
+    }
+    q++;
+  }
+  return p;
+ };
