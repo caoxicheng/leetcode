@@ -1,17 +1,13 @@
 function plusOne(digits: number[]): number[] {
-  plusOneInside(digits.length - 1);
-  return digits;
+  const len: number = digits.length;
 
-  function plusOneInside(index: number): void {
-    digits[index] = (digits[index] + 1) % 10;
-    if (digits[index] === 0) {
-      if (digits[index - 1] !== void 0) {
-        plusOneInside(index - 1);
-      } else {
-        digits.unshift(1);
-      }
+  for (let i = len -1 ; i >= 0; i--) {
+    digits[i]++;
+    digits[i] = digits[i]%10;
+    if (digits[i] !== 0) {
+      return digits;
     }
   }
+  digits.unshift(1);
+  return digits;
 };
-
-plusOne([9,9])
