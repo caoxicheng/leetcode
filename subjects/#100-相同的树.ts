@@ -24,27 +24,16 @@ class TreeNode {
 }
 
 function isSameTree(p: TreeNode | null, q: TreeNode | null): boolean {
-  let left: number[] = node(p), right: number[] = node(q);
-  if (left.length !== right.length) {
+  if (p === null && q === null) {
+    return true;
+  }
+
+  if (p === null || q === null) {
     return false;
   }
 
-  for (let i = 0; i < left.length; i++) {
-    if (left[i] !== right[i]) {
-      return false;
-    }
+  if (q.val !== p.val) {
+    return false;
   }
-  return true;
-}
-
-function node(N: TreeNode | null): number[] {
-  if (N === null) {
-    return [null];
-  }
-
-  if (N.left === null && N.right === null) {
-    return [N.val];
-  }
-
-  return [N.val].concat(node(N.left), node(N.right));
+  return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
 }
