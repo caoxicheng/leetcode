@@ -5,12 +5,10 @@
 function maxProfit(prices: number[]): number {
   let minPrice: number = Infinity;
   let maxPrice: number = 0;
-  for (let index = 0; index < prices.length; index++) {
-    if (prices[index] < minPrice) {
-      minPrice = prices[index];
-    } else if ( maxPrice < (prices[index] - minPrice)) {
-      maxPrice = prices[index] - minPrice;
-    }
+  for (let index = 0, price; index < prices.length; index++) {
+    price = prices[index];
+    minPrice = Math.min(minPrice, price);
+    maxPrice = Math.max(maxPrice, price - minPrice);
   }
   return maxPrice;
 };
