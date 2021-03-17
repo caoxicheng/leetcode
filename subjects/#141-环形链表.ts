@@ -9,17 +9,19 @@ class ListNode {
 
 function hasCycle(head: ListNode | null): boolean {
   
-  const stack = new WeakMap();
+  let fast: ListNode | null = head;
+  let slow: ListNode | null = head;
 
-  return (function loop (head) {
-    if (head === null) {
-      return false
+  let res = false;
+  while (fast !== null && fast.next !== null) {
+    slow = slow.next;
+    fast = fast.next.next;
+
+    if (slow === fast) {
+      res = true;
+      break;
     }
-    if (!stack.has(head)) {
-      stack.set(head, true);
-      return loop(head.next);
-    } else {
-      return true;
-    }
-  })(head)
+  }
+
+  return res;
 }
