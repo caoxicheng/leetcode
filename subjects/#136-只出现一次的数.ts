@@ -1,18 +1,8 @@
 function singleNumber(nums: number[]): number {
-  const stack = Object.create(null);
-  let currentNum: number; 
-  for (let i = 0, l = nums.length; i < l; i++) {
-    currentNum = nums[i];
-    if (stack[currentNum] === void 0) {
-      stack[currentNum] = 1;
-    } else {
-      delete stack[currentNum];
-    }
+  let res: number = 0;
+  // ++i 和 i++ 也会有一些细微的性能区别！
+  for( let i = 0, l = nums.length; i < l; ++i) {
+    res ^= nums[i];
   }
-  for (const key in stack) {
-    if (Object.prototype.hasOwnProperty.call(stack, key)) {
-      currentNum = parseInt(key);
-    }
-  }
-  return currentNum;
+  return res;
 };
